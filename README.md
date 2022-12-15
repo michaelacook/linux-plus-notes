@@ -1,0 +1,2 @@
+# Linux+ study notes
+This repo contains my study notes for the Linux+ exam. Notes are in a fairly raw, messy format - mainly my stream of consciousness while reviewing and studying my certification course materials.
