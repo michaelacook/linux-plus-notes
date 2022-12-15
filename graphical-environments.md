@@ -56,3 +56,42 @@ orca --text-setup
 - nightlight
 
 ## X11
+- how graphics are displayed
+- X.Org - provides graphical rendering for Unix-like operating systems
+- Display server - X Server
+  - core display server system that provides the protocol service for the X Window System
+  - extra functionality added with extensions
+    - RandR: provides dynamic resizing of the root window, refresh rates, mirroring displays, etc
+    - GLX: provides rendering of 3D OpenGL content within windows
+    - Xinerama: provides the ability to split the desktop display across multiple windows
+- each graphical rendering on the screen is a client of the X.org server, which draws it on the screen
+- architecture stack
+  - application
+    - terminal emulator, web browser, etc
+  - Display manager (GNOME, KDE, Xfce, etc)
+    - send intructions from display manager to Xlib/xcb
+  - Xlib/XCB - libraries sending drawing requests to X server
+    - XCB - KDE
+  - X Server - configs in `/etc/X11/xorg.conf` and `/etc/X11/xorg.conf.d` dir
+  - libDRM - Direct Rendering Manager
+    - sits between kernel and X server
+  - kernel and graphics driver
+  - graphics card
+- flows both ways
+
+### Wayland
+- replacement for X, but not there yet
+- simpler, fewer steps
+- XWayland - library that enables X Window clients to render with Wayland (for backwards compatibility)
+
+## Remote graphical connections
+- access remote system's display
+- basic functionality of the X server is that it is able to be networked
+- `xhost` - older and insecure method of allowing client systems the ability to display remote X11 windows
+  - `xhost + | xhost -` to enable or disable
+  - `xhost + [IP]` to allow a single host to access via the network
+  - insecure, usually disabled, shouldn't use
+- `xauth` - allows a user to edit and view security information that grants a user the ability to control remote X11 client windows
+- `VNC` - Virtual Network Computing enables a remote computer to control the graphical display of a remote system. Insecure by default
+- `SPICE` - TLS encrypted remote desktop protocol that can be used on Linux, Windows and Android systems
+  - Simple Protocol for Independent Computing Environments
