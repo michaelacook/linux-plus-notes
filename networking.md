@@ -96,7 +96,7 @@ Private IP addressing
 - `netstat` - used to display network connections and their state on a system. can also be used to view the routing table. part of the `net-tools` package, it is deprecated
   - supply `-tl` option for just TCP
   - supply `-ul` option for UDP
-  - supply `-p` to view processes associated with listening ports\
+  - supply `-p` to view processes associated with listening ports
   - view routing table with `traceroute -r`
 - `ss` - socket statistics 
   - modern equivalent of netstat, but does not show the routing table
