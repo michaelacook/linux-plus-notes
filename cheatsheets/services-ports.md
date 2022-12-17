@@ -1,0 +1,12 @@
+|Service|Port|Protocol|
+|-|-|-|
+|DNS|53|TCP, UDP|
+|NTP|123|UDP|
+|DHCP|67, 68|UDP|
+|SSH|22|TCP|
+|Telnet|23|TCP|
+|HTTP|80|TCP, UDP|
+|PKI/SSL|443|TCP|
+|LDAP|389|TCP|
+|LDAPS|636|TCP|
+|Kerberos|88|TCP|

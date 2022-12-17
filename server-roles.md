@@ -40,7 +40,7 @@
     - Red Hat Identity Management service - sort of like Red Hat's version of Active Directory
 - Certificate Authority Servers - known as PKI (public key infrastructure) systems, these platforms provide trusted certificates to hosts and clients to guarantee that the system a user connects to is a trusted system, and that the network communications between client and server are encrypted
   - e.g., connecting to your bank's website - you want HTTPS, not HTTP
-  - 442 TCP (for SSL traffic to websites)
+  - 443 TCP (for SSL traffic to websites)
   - service provided by:
     - OpenSSL
 
