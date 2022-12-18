@@ -52,3 +52,72 @@
     - HAProxy
     - Keepalived
 - server clustering - practice of running more than one server that is configured to provide the same service. with this type of configuration, should one server fail, another is available to continue providing the service. server clustering is typically set up behind a load balancer to ensure service uptime and availability
+
+## Monitoring and security servers
+- logging services - logging services are crucial sources of information that contain details about the system's state and operations
+  - network ports
+    - 514 UDP (syslog)
+      - unencrypted
+      - receive logs
+    - 6514 TCP (secure syslog communications)
+    - 19531 TCP (`systemd-journal-gateway` serves journal events over the network)
+  - service provided by:
+    - syslog-ng daemon
+    - rsyslog
+    - systemd-journald
+- monitoring services - monitoring service applications allow an overall view server (or group of servers) and their states. metrics (such as RAM and CPU, uptime, running services, logged-in users, etc) are recorded and displayed in a web interface. often these metrics are gathered by SNMP (Simple Network Management Protocol)
+  - network ports
+    - 161, 162 UDP (SNMP)
+      - unencrypted
+    - 10161, 10162 (SNMP over TLS)
+    - typically HTTP ports for web applications. network ports vary by service implementation
+      - viewing in a webpage
+  - service provided by:
+    - SNMP, which feeds data to:
+      - Nagios
+      - Munin
+      - Zabbix
+      - Monit
+- proxy server - a centrtalized server that computers on a network connect to prior to reaching the internet. the proxy allows an organization to prevent particular websites and domains from being accessed from within the network. a proxy server can also cache commonly accessed network resources, speeding up access to some websites and saving network bandwidth
+  - network ports
+    - 3128 TCP (Squid proxy)
+  - service provided by:
+    - Squid
+    - Varnish (reverse proxy for websites)
+      - sits in front of a web server and caches commonly accessed files to take some load off the web server
+    - Apache
+    - Nginx
+
+## Common server systems for client use
+- file servers - provide client systems access to remote files and folders on centralized servers
+  - 137, 138, 139, 445 TCP (Samba) - Server Message Block protocol
+  - 111 TCP/UDP, 2049 TCP/UDP (NFS) - Network File System
+- email servers - provide a means to send and receive electronic mail between individuals, organizations, and from devices
+  - network ports:
+    - 25 TCP (unencrypted SMTP)
+    - 465 TCP (SMTPS, SMTP+SSL)
+    - 587 TCP (MSA, Message Submission for Email)
+    - 110 TCP (unencrypted POP3)
+    - 995 TCP (encrypted SSL/TLS POP3)
+    - 143 TCP (unencrypted IMAP)
+    - 993 TCP (unencrypted SSL/TLS IMAP)
+  - service provided by:
+    - Sendmail (SMTP)
+    - Postfix (SMTP)
+    - Dovecot (IMAP, POP)
+- web server - primary delivery mechanism of online information, media and applications
+  - 80 TCP (HTTP)
+  - 443 (HTTPS)
+  - Apache, Nginx
+- print server - centralized location for print job controls and network printer access
+  - 631 TCP (default web interface for CUPS server management)
+    - Common Unix Print Service
+- database servers - provide centralized repositories for data of various kinds. they often store customer/client information for a company, student information for schools, inventory information for distribution centers, backend data for websites, etc
+  - 3306 TCP (MySQL, MariaDB)
+  - 5432 TCP (PostgreSQL)
+
+## Containers
+- host OS -> container run time -> containers
+- don't have independent operating systems, no independtnt kernel
+- share the kernel of the host system
+- has its own user space, just application and required files separated from other containers and the host OS, but still using the host's OS via the container runtime
