@@ -1,0 +1,21 @@
+# Terminal types
+- pseudo-terminals vs. actual terminals
+- real terminals are on the machine, not accessed over the network
+- pseudo-terminals are a proxy for applications to actually access the terminal on the machine
+- `tty` command to see which terminal you are currently in
+- real terminals are devices located at `/dev/tty${1..6}`
+- if running a terminal emulator, you will be in a pseudoterminal like `/dev/pts/0` or something similar
+  - pseudoterminals work on a slave-master system
+    - `ls /dev/pts` you will see the slave and the master - `0` is the slave and `ptmx` is the master
+    - the master is tied to a virtual terminal, and the various slaves like `1, 2, 3` etc are tied to the master
+    - when a process needs a terminal it usually provisions a pseudoterminal that is bridged to a real virtual terminal
+      - i.e., your terminal emulator is using a slave terminal of a master, and that master is most likely bridged to `/dev/tty2`
+    - the graphical desktop environment running on an X server is usually bridged to `/dev/tty2` 
+      - not always though. on my Manjaro machine it was tied to `/dev/tty7` which is weird
+    - to change terminals, use `chvt [terminal]` command and specify a tty number
+      - you can't change to `/dev/pts` because that is a device that only the graphical environment can access
+      - you always access terminals via tty numbers. 1 is usually the lock screen, 2 is usually the graphical environment running on the X server, and 3 and up are non-graphical terminals
+- `/etc/securetty`
+  - list of terminals in which root login is allowed
+  - remove terminals from the list to prevent root login
+  - should contain no pseudoterminals, as it is very dangerous for root to be allowed to login to pseudoterminals, as this allows for root to login over the network
