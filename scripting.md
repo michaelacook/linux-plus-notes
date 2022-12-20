@@ -46,17 +46,7 @@ case $var in
     3)
         [do a thing]
         ;;
-esac
-```
 
-- looping constructs
-
-```bash
-for i in [list]; do [a thing]; done
-
-counter=0
-while [ $counter -le 10 ]
-do 
     [a thing]
     ((counter++))
 
