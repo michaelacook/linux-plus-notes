@@ -1,0 +1,53 @@
+# Devices
+- `udev` service is the device manager for the Linux kernel, links information on system hardware to `/dev`
+  - when a device is attached to the computer, udev passes information through the D-Bus service to the `/dev` directory
+    - note: D-Bus passes information around the system from service to service and to devices
+      - main pipeline for information in the system
+  - `/dev` contains handles to all devices attached to the system
+  - run `lsblk` to view block devices
+    - command queries the `/dev` directory through the D-Bus which sends back information to be ouputted to stdout in the terminal
+  - can see info about cpu cores in `/dev/cpu`
+  - can see info about video cards in `/dev/dri`
+- reading `/dev` information in human-readable form
+  - `lspci` - display information on PCI devices
+    - `-k` option to show PCI devices and their kernel modules
+    - `-v` option to show detailed information about each PCI device
+  - `lsusb` - display information on USB devices
+    - use `-v` option to get detailed information
+    - use `-t` option to get a tree view of which USB device is attached which USB controller
+  - `lscpu` - display information on processors
+  - `lsblk` - display information on all block devices
+    - use `-f` option to see the filesystem associated with each device
+
+## Common UNIX Print System (CUPS)
+- `/etc/cups`
+  - contains the config files for the CUPS print server daemon and printer settings
+  - preferable to use the web interface to manage the configuration files located in this directory
+- `http://localhost:631` - default URL for the locally installed CUPS server
+  - requires a root login to add or remove printers here
+- install cups on Debian-based distros: `apt-get install cups printer-driver-cups-pdf`
+
+## Line Printer Daemon
+- printing files from the command line, provided by CUPS
+- `lpstat` - diaply the status of CUPS server and configured printers and queues
+  - `-s` option for summary
+  - `-l` option for long status listing
+- list connection options with `lpinfo -v`
+- `lpadmin` - admin tool to add, modify and delete printers
+  - `lpadmi -p [printer name] -L [description] -v [connection type]://[IP]:9100 -m [driver]`
+    - use the generic `everywhere` printer driver to query the printer itself for the driver
+- search cups database for postscript printer description (PPD) to use with the printer `lpinfo --make-and-model "make and model name" -m`
+  - assign a PPD to the printer `lpadmin -p [make and model] -m [location of ppd] -E`
+- `lpc` - older BSD-style command that can be used to view information about installed printers. the `status` command will show the status of all installed printers
+  - `lpc status`
+- print a document with `lpr [/path/to/file]`
+  - to specify a printer other than default use `-P [printer name]` option
+- view print jobs with `lpq` 
+  - use `-a` option to view all queues for all printers at once
+- remove a print job from the print queue `lprm [job number|-]`
+  - to remove all jobs pass `-` as the argument
+- remove a printer `lpadmin -x [printer name]`
+- reject all new jobs on a printer until specified otherwise `cupsreject [printer name]`
+- disable a printer `cupsdisable [printer name]`
+- enable a printer with `cupsenable [printer name]`
+- allow printer to accept jobs with `cupsaccept [printer name]`
