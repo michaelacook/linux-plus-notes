@@ -76,9 +76,11 @@ Standard user and group commands can be found [here](https://github.com/michaela
 - `~/.bash_profile`
   - contains a user's modified PATH env var and will source the `~/.bashrc` file
   - can also be named `~/.profile` in some distributions
+  - runs when user logs into system from the console
 - `~/.bashrc`
   - local user command aliases and functions defined here
   - this file sources the `/etc/bashrc` file
+  - runs when user opens a terminal emulation session in a graphical environment
 - `~/.bash_logout`
   - gets called on a user logout and can be used to shut down applications, display a message, or perform other environment cleanup tasks
 - `~/.bash_login`
